@@ -19,6 +19,7 @@ public class FirstTest {
     String EMPTY_SEARCH = "Bla zzz bla qwe";
     String SEARCH_DESCRIPTION_ARTICLE = "//*[@resource-id='org.wikipedia:id/search_container']//*[@text='Object-oriented programming language']";
     String CANCEL_SEARCH_BUTTON = "//android.widget.ImageView[@resource-id='org.wikipedia:id/search_close_btn']";
+    String ARTICLE_TITLE = "//*[contains(@text,'Java (programming language)')]";
 
     private AppiumDriver driver; //обьявление новой переменной driver
 
@@ -46,100 +47,156 @@ public class FirstTest {
     public void testArticleSearch() {
     skipButtonClick();
     searchWikipediaClick();
-    searchWikipediaArticle();
+    searchArticleTitle();
     }
 
     @Test
     public void testCancelSearch(){
     skipButtonClick();
     searchWikipediaClick();
-    searchWikipediaArticle();
-    cancelSearchWikipediaArticle();
+    searchArticleTitle();
+    cancelArticleSearch();
+    }
+
+    @Test
+    public void testCompareArticleTitle(){
+    skipButtonClick();
+    searchWikipediaClick();
+    searchArticleTitle();
+    compareArticleTitle();
+    }
+
+    @Test
+    public void testArticleSwipe(){
+        skipButtonClick();
+        searchWikipediaClick();
+        searchArticleTitle();
+        clickArticleOpen();
     }
 
     public void skipButtonClick(){
-    waitForElementByXpathAndClick(
-    SKIP_BUTTON,
+    waitForElementAndClick(
+    By.xpath(SKIP_BUTTON),
     "Cannot find [SKIP] button",
     5);
     }
 
     public void searchWikipediaClick(){
 
-   waitForElementByXpathAndClick(
-    SEARCH_WIKIPEDIA,
-    "Cannot find search input",
-    5);
+   waitForElementAndClick(
+   By.xpath(SEARCH_WIKIPEDIA) ,
+   "Cannot find search input",
+   5);
     }
 
-    public void searchWikipediaArticle(){
+    public void searchArticleTitle(){
 
-   waitForElementByXpathAndSendKeys(
-   SEARCH_WIKIPEDIA,
+   waitForElementAndSendKeys(
+   By.xpath(SEARCH_WIKIPEDIA),
    WORD_FOR_SEARCH,
    "Cannot find search input",
    5);
 
-   waitForElementPresentByXpath(
-   SEARCH_DESCRIPTION_ARTICLE,
+   waitForElementPresent(
+   By.xpath(SEARCH_DESCRIPTION_ARTICLE),
    "Cannot find " + SEARCH_DESCRIPTION_ARTICLE + " topic searching by " + WORD_FOR_SEARCH,
    12);
     }
 
-    public void cancelSearchWikipediaArticle(){
+    public void cancelArticleSearch(){
 
-    waitForElementByXpathAndClick(
-    CANCEL_SEARCH_BUTTON,
+    waitForElementAndClick(
+    By.xpath(CANCEL_SEARCH_BUTTON),
     "Cannot find [x] cancel search button",
     10);
 
     waitForElementNotPresent(
-    CANCEL_SEARCH_BUTTON,
+    By.xpath(CANCEL_SEARCH_BUTTON),
     "[X] is still presented on the page",
     5);
     }
 
-    private WebElement waitForElementPresentByXpath(String xpath, String error_message, long timeoutInSeconds){ //поиск элемента по Xpath и ожидание его появления
+    public String compareArticleTitle(){  //03 Первые тесты на Android/video 10. Assertions.
+
+    waitForElementAndClick(
+    By.xpath(SEARCH_DESCRIPTION_ARTICLE),
+    "Cannot find article title description",
+    10);
+
+    WebElement title_element = waitForTitleElement();
+    return title_element.getText();
+    }
+
+//    WebElement title_element = waitForElementPresent(
+//            By.xpath(ARTICLE_TITLE),
+//            "Cannot find article title",
+//            10);
+//
+//    String article_title = title_element.getAttribute("text");
+//
+//        Assert.assertEquals(
+//                "We see unexpected title",
+//                "Java (programming language)",
+//                article_title);
+
+    public void clickArticleOpen(){
+
+    waitForElementAndClick(
+    By.xpath(SEARCH_DESCRIPTION_ARTICLE),
+    "Cannot find article title description",
+    10);
+
+    waitForElementPresent(
+    By.xpath(ARTICLE_TITLE),
+    "Cannot find article title",
+    10);
+    }
+
+    public WebElement waitForTitleElement() {
+    return waitForElementPresent(
+    By.xpath(ARTICLE_TITLE),
+    "Cannot find article title on the page",
+    5);
+    }
+
+    private WebElement waitForElementPresent(By by, String error_message, long timeoutInSeconds){ //поиск элемента и ожидание его появления
     WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds); //метод Selenium
     wait.withMessage(error_message + "\n");
-    By by = By.xpath(xpath);
     return wait.until(ExpectedConditions.presenceOfElementLocated(by));
     }
 
-    private WebElement waitForElementPresentById(String id, String error_message, long timeoutInSeconds){ //поиск элемента по Id и ожидание его появления
-        WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds); //метод Selenium
-        wait.withMessage(error_message + "\n");
-        By by = By.id(id);
-        return wait.until(ExpectedConditions.presenceOfElementLocated(by));
+    private WebElement waitForElementPresent(By by, String error_message){ //Перегруженный метод поиска элемента по Xpath и ожидание его появления
+        return waitForElementPresent(by, error_message,5);
     }
 
-    private WebElement waitForElementPresentByXpath(String xpath, String error_message){ //Перегруженный метод поиска элемента по Xpath и ожидание его появления
-        return waitForElementPresentByXpath(xpath, error_message,5);
-    }
-
-    private WebElement waitForElementByXpathAndClick(String xpath, String error_message, long timeOutInSeconds){ //Ожидание отображение элемента и клик по нему
-    WebElement element = waitForElementPresentByXpath(xpath, error_message, timeOutInSeconds);
+    private WebElement waitForElementAndClick(By by, String error_message, long timeOutInSeconds){ //Ожидание отображение элемента и клик по нему
+    WebElement element = waitForElementPresent(by, error_message, timeOutInSeconds);
     element.click();
     return element;
     }
 
-    private WebElement waitForElementByIdAndClick(String id, String error_message, long timeOutInSeconds){ //Ожидание отображение элемента и клик по нему
-    WebElement element = waitForElementPresentById(id, error_message, timeOutInSeconds);
+    private WebElement waitForElementByIdAndClick(By by, String error_message, long timeOutInSeconds){ //Ожидание отображение элемента и клик по нему
+    WebElement element = waitForElementPresent(by, error_message, timeOutInSeconds);
     element.click();
     return element;
     }
 
-    private WebElement waitForElementByXpathAndSendKeys(String xpath, String value, String error_message, long timeOutInSeconds){ //Ожидание отображение элемента и введение в него текста
-        WebElement element = waitForElementPresentByXpath(xpath, error_message, timeOutInSeconds);
+    private WebElement waitForElementAndSendKeys(By by, String value, String error_message, long timeOutInSeconds){ //Ожидание отображение элемента и введение в него текста
+        WebElement element = waitForElementPresent(by, error_message, timeOutInSeconds);
         element.sendKeys(value);
         return element;
     }
 
-    private boolean waitForElementNotPresent(String id, String error_message, long timeoutInSeconds){ //Метод, определяющий отсутствие элемента на странице
+    private boolean waitForElementNotPresent(By by, String error_message, long timeoutInSeconds){ //Метод, определяющий отсутствие элемента на странице
     WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
     wait.withMessage(error_message + "\n");
-    By by = By.id(id);
     return wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
+    }
+
+    private WebElement waitForElementAndClear(By by, String error_message, long timeoutInSeconds){ //Метод, очищающий элемент от информации, которую ввели мы или которая была введена до нас
+        WebElement element = waitForElementPresent(by, error_message, timeoutInSeconds);
+        element.clear();
+        return element;
     }
 }
 
