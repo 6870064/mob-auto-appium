@@ -1,15 +1,20 @@
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.touch.WaitOptions;
+import io.appium.java_client.touch.offset.PointOption;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.URL;
+import java.time.Duration;
 
 public class FirstTest {
 
@@ -51,7 +56,7 @@ public class FirstTest {
     }
 
     @Test
-    public void testCancelSearch(){
+    public void testCancelSearch(){ // Ex3 Hometask
     skipButtonClick();
     searchWikipediaClick();
     searchArticleTitle();
@@ -68,17 +73,16 @@ public class FirstTest {
 
     @Test
     public void testArticleSwipe(){
-        skipButtonClick();
-        searchWikipediaClick();
-        searchArticleTitle();
-        clickArticleOpen();
-//        swupeUp(2000);
-//        swupeUp(2000);
-//        swupeUp(2000);
-//        swupeUp(2000);
-//        swupeUp(2000);
-//        swupeUp(2000);
-//        swupeUp(2000);
+    skipButtonClick();
+    searchWikipediaClick();
+    searchArticleTitle();
+    clickArticleOpen();
+
+    int amountOfSwipes = 12;
+
+    for (int i = 0; i <=amountOfSwipes; i++){
+    swipeUp(2000);
+     }
     }
 
     public void skipButtonClick(){
@@ -133,18 +137,6 @@ public class FirstTest {
     WebElement title_element = waitForTitleElement();
     return title_element.getAttribute("text");
     }
-
-//    WebElement title_element = waitForElementPresent(
-//            By.xpath(ARTICLE_TITLE),
-//            "Cannot find article title",
-//            10);
-//
-//    String article_title = title_element.getAttribute("text");
-//
-//        Assert.assertEquals(
-//                "We see unexpected title",
-//                "Java (programming language)",
-//                article_title);
 
     public void clickArticleOpen(){
 
@@ -206,17 +198,20 @@ public class FirstTest {
         return element;
     }
 
-//    protected void swupeUp(int timeOfSwipe){
-//        TouchAction action = new TouchAction(driver);
-//        Dimension size = driver.manage().window().getSize();
-//        int x = size.width / 2;
-//        int start_y = (int) (size.height * 0.8);
-//        int end_y = (int) (size.height * 0.2);
-//
-//        action.press(x, start_y).waitAction(timeOfSwipe).moveTo(x, end_y).release().perform();
-//    }
+    protected void swipeUp(int timeOfSwipe){
+    TouchAction action = new TouchAction(driver);
+    Dimension size = driver.manage().window().getSize();
+    int x = size.width / 2;
+    int start_y = (int) (size.height * 0.8);
+    int end_y = (int) (size.height * 0.2);
 
-
+    action.
+    press(PointOption.point(x, start_y)).
+    waitAction(WaitOptions.waitOptions(Duration.ofMillis(timeOfSwipe))).
+    moveTo(PointOption.point(x, end_y)).
+    release().
+    perform();
+    }
 }
 
 
