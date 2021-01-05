@@ -25,6 +25,11 @@ public class FirstTest {
     String SEARCH_DESCRIPTION_ARTICLE = "//*[@resource-id='org.wikipedia:id/search_container']//*[@text='Object-oriented programming language']";
     String CANCEL_SEARCH_BUTTON = "//android.widget.ImageView[@resource-id='org.wikipedia:id/search_close_btn']";
     String ARTICLE_TITLE = "//*[contains(@text,'Java (programming language)')]";
+    String FOOTER_ELEMENT = "//*[contains(@text,'View article in browser')]";
+    String SAVE_BUTTON = "//android.widget.TextView[@resource-id='org.wikipedia:id/article_menu_bookmark']";
+//    String ADD_TO_LIST_BUTTON = "//android.widget.Button[@resource-id='org.wikipedia:id/snackbar_action']";
+    String ADD_TO_LIST_BUTTON = "//*[contains(@text,'ADD TO LIST')]";
+    String CREATE_NEW_LIST_BUTTON = "//*[contains(@text,'Create new')]";
 
     private AppiumDriver driver; //обьявление новой переменной driver
 
@@ -63,6 +68,11 @@ public class FirstTest {
     cancelArticleSearch();
     }
 
+//    @Test
+//    public void checkArticleTitle(){ //Ex4*: Тест: проверка слов в поиске
+//        //Findelements
+//    }
+
     @Test
     public void testCompareArticleTitle(){
     skipButtonClick();
@@ -83,6 +93,24 @@ public class FirstTest {
     for (int i = 0; i <=amountOfSwipes; i++){
     swipeUp(2000);
      }
+    }
+
+    @Test
+    public void testArticleSwipeToFooter(){
+        skipButtonClick();
+        searchWikipediaClick();
+        searchArticleTitle();
+        clickArticleOpen();
+        swipeUpToElement();
+    }
+
+    @Test
+    public void saveOneArticle(){
+    skipButtonClick();
+    searchWikipediaClick();
+    searchArticleTitle();
+    clickArticleOpen();
+    saveArticle();
     }
 
     public void skipButtonClick(){
@@ -212,6 +240,46 @@ public class FirstTest {
     release().
     perform();
     }
+
+    protected void swipeUpQuick(){
+        swipeUp(200);
+    }
+
+    protected void swipeUpToElement(){
+    swipeUpToFindElement(
+    By.xpath(FOOTER_ELEMENT),
+    "Can't find footer element 'View article in browser' link",
+    30);
+    }
+
+    protected void swipeUpToFindElement(By by, String error_message, int max_swipes){ //метод свайпа до заданного элемента (например, свайп вверх до футера, низа страницы).
+    int already_swiped = 0;
+    while (driver.findElements(by).size()==0){
+
+    if (already_swiped > max_swipes){
+    waitForElementPresent(by, "Cannot find element by swiping up. \n" + error_message,0);
+    return;
+        }
+    swipeUpQuick();
+    ++already_swiped;
+        }
+    }
+
+    protected void saveArticle(){
+
+        waitForElementAndClick(
+                By.xpath(SAVE_BUTTON),
+                "Cannot click [Save] button in tab bar",
+                10);
+
+        waitForElementAndClick(
+                By.xpath(ADD_TO_LIST_BUTTON),
+                "Cannot click [ADD TO LIST] button",
+                5);
+
+        waitForElementAndClick(
+                By.xpath(CREATE_NEW_LIST_BUTTON),
+                "Cannot click [Create New] button",
+                10);
+    }
 }
-
-
