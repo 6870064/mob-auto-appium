@@ -27,9 +27,14 @@ public class FirstTest {
     String ARTICLE_TITLE = "//*[contains(@text,'Java (programming language)')]";
     String FOOTER_ELEMENT = "//*[contains(@text,'View article in browser')]";
     String SAVE_BUTTON = "//android.widget.TextView[@resource-id='org.wikipedia:id/article_menu_bookmark']";
-//    String ADD_TO_LIST_BUTTON = "//android.widget.Button[@resource-id='org.wikipedia:id/snackbar_action']";
     String ADD_TO_LIST_BUTTON = "//*[contains(@text,'ADD TO LIST')]";
     String CREATE_NEW_LIST_BUTTON = "//*[contains(@text,'Create new')]";
+    String NAME_OF_THE_LIST = "//*[contains(@text,'Name of this list')]";
+    String DESCRIPTION_OF_THE_LIST = "//*[contains(@text,'Description (optional)')]";
+    String OK_BUTTON = "//*[contains(@text,'OK')]";
+    String NAME_OF_THE_LIST_VALUE = "First list title";
+    String DESCRIPTION_OF_THE_LIST_VALUE = "First list description";
+    String BACK_BUTTON = "//android.widget.ImageButton[@content-desc='Navigate up']";
 
     private AppiumDriver driver; //обьявление новой переменной driver
 
@@ -39,7 +44,7 @@ public class FirstTest {
 
         capabilities.setCapability("platformName","Android");
         capabilities.setCapability("deviceName","AndroidTestDevice");
-        capabilities.setCapability("platformVersion","10.0");
+        capabilities.setCapability("platformVersion","9.0");
         capabilities.setCapability("automationName","Appium");
         capabilities.setCapability("appPackage","org.wikipedia");
         capabilities.setCapability("appActivity",".main.MainActivity");
@@ -111,6 +116,8 @@ public class FirstTest {
     searchArticleTitle();
     clickArticleOpen();
     saveArticle();
+    navigationBack();
+    cancelArticleSearch();
     }
 
     public void skipButtonClick(){
@@ -126,6 +133,14 @@ public class FirstTest {
    By.xpath(SEARCH_WIKIPEDIA) ,
    "Cannot find search input",
    5);
+    }
+
+    public void navigationBack(){
+        
+    waitForElementAndClick(
+    By.xpath(BACK_BUTTON),
+    "Cannot find [<] button",
+    5);
     }
 
     public void searchArticleTitle(){
@@ -281,5 +296,28 @@ public class FirstTest {
                 By.xpath(CREATE_NEW_LIST_BUTTON),
                 "Cannot click [Create New] button",
                 10);
+
+        waitForElementAndSendKeys(
+                By.xpath(NAME_OF_THE_LIST),
+                NAME_OF_THE_LIST_VALUE,
+                "Cannot find 'Name of the list' field",
+                5);
+
+        waitForElementAndSendKeys(
+                By.xpath(DESCRIPTION_OF_THE_LIST),
+                DESCRIPTION_OF_THE_LIST_VALUE,
+                "Cannot find 'Name of the list' field",
+                5);
+
+        waitForElementAndClick(
+                By.xpath(OK_BUTTON),
+                "Cannot find 'Description of the list' field",
+                5);
+
+
+
+
     }
+
+
 }
