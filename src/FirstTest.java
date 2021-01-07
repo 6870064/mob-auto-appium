@@ -20,11 +20,14 @@ public class FirstTest {
 
     String SKIP_BUTTON = "//*[contains(@text,'SKIP')]";
     String SEARCH_WIKIPEDIA = "//*[contains(@text,'Search Wikipedia')]";
-    String WORD_FOR_SEARCH = "Java";
-    String EMPTY_SEARCH = "Bla zzz bla qwe";
-    String SEARCH_DESCRIPTION_ARTICLE = "//*[@resource-id='org.wikipedia:id/search_container']//*[@text='Object-oriented programming language']";
+    String FIRST_WORD_FOR_SEARCH = "Java";
+    String FIRST_ARTICLE_SEARCH_DESCRIPTION = "//*[@resource-id='org.wikipedia:id/search_container']//*[@text='Object-oriented programming language']";
+    String SECOND_WORD_FOR_SEARCH = "Rammstein";
+    String SECOND_ARTICLE_SEARCH_DESCRIPTION = "//*[@resource-id='org.wikipedia:id/search_container']//*[@text='German industrial metal band']";
+    String WORD_FOR_EMPTY_SEARCH = "Bla zzz qwerty";
     String CANCEL_SEARCH_BUTTON = "//android.widget.ImageView[@resource-id='org.wikipedia:id/search_close_btn']";
-    String ARTICLE_TITLE = "//*[contains(@text,'Java (programming language)')]";
+    String FIRST_ARTICLE_TITLE = "//*[contains(@text,'Java (programming language)')]";
+    String SECOND_ARTICLE_TITLE = "//*[contains(@text,'Rammstein')]";
     String FOOTER_ELEMENT = "//*[contains(@text,'View article in browser')]";
     String SAVE_BUTTON = "//android.widget.TextView[@resource-id='org.wikipedia:id/article_menu_bookmark']";
     String ADD_TO_LIST_BUTTON = "//*[contains(@text,'ADD TO LIST')]";
@@ -34,7 +37,10 @@ public class FirstTest {
     String OK_BUTTON = "//*[contains(@text,'OK')]";
     String NAME_OF_THE_LIST_VALUE = "First list title";
     String DESCRIPTION_OF_THE_LIST_VALUE = "First list description";
+    String LIST_TITLE_ON_READING_LIST_POP_UP = "//android.widget.TextView[@resource-id='org.wikipedia:id/item_title']";
     String BACK_BUTTON = "//android.widget.ImageButton[@content-desc='Navigate up']";
+    String VIEW_LIST_BUTTON = "//*[contains(@text,'VIEW LIST')]";
+    String NO_RESULTS_STRING = "//android.widget.TextView[@resource-id='org.wikipedia:id/results_text']";
 
     private AppiumDriver driver; //обьявление новой переменной driver
 
@@ -44,7 +50,7 @@ public class FirstTest {
 
         capabilities.setCapability("platformName","Android");
         capabilities.setCapability("deviceName","AndroidTestDevice");
-        capabilities.setCapability("platformVersion","9.0");
+        capabilities.setCapability("platformVersion","8.0");
         capabilities.setCapability("automationName","Appium");
         capabilities.setCapability("appPackage","org.wikipedia");
         capabilities.setCapability("appActivity",".main.MainActivity");
@@ -110,15 +116,31 @@ public class FirstTest {
     }
 
     @Test
-    public void saveOneArticle(){
+    public void testEmptySearch(){
+        skipButtonClick();
+        searchWikipediaClick();
+        searchWithEmptyResult();
+    }
+
+    @Test
+    public void testSaveOneArticle(){
     skipButtonClick();
     searchWikipediaClick();
-    searchArticleTitle();
-    clickArticleOpen();
-    saveArticle();
-    navigationBack();
-    cancelArticleSearch();
+    saveFirstArticle();
     }
+
+    @Test
+    public void testSaveTwoArticles(){
+    skipButtonClick();
+    searchWikipediaClick();
+    saveFirstArticle();
+    backFromSaveList();
+    saveSecondArticle();
+
+    }
+
+    //navigationBack();
+    //        cancelArticleSearch();
 
     public void skipButtonClick(){
     waitForElementAndClick(
@@ -135,26 +157,32 @@ public class FirstTest {
    5);
     }
 
-    public void navigationBack(){
-        
-    waitForElementAndClick(
-    By.xpath(BACK_BUTTON),
-    "Cannot find [<] button",
-    5);
-    }
-
     public void searchArticleTitle(){
 
    waitForElementAndSendKeys(
    By.xpath(SEARCH_WIKIPEDIA),
-   WORD_FOR_SEARCH,
+           FIRST_WORD_FOR_SEARCH,
    "Cannot find search input",
    5);
 
    waitForElementPresent(
-   By.xpath(SEARCH_DESCRIPTION_ARTICLE),
-   "Cannot find " + SEARCH_DESCRIPTION_ARTICLE + " topic searching by " + WORD_FOR_SEARCH,
+   By.xpath(FIRST_ARTICLE_SEARCH_DESCRIPTION),
+   "Cannot find " + FIRST_ARTICLE_SEARCH_DESCRIPTION + " topic searching by " + FIRST_WORD_FOR_SEARCH,
    12);
+    }
+
+    public void searchWithEmptyResult(){
+
+    waitForElementAndSendKeys(
+    By.xpath(SEARCH_WIKIPEDIA),
+    WORD_FOR_EMPTY_SEARCH,
+    "Cannot find search input",
+    5);
+
+    waitForElementPresent(
+    By.xpath(NO_RESULTS_STRING),
+    "Cannot find " + NO_RESULTS_STRING + " topic searching by " + WORD_FOR_EMPTY_SEARCH,
+    12);
     }
 
     public void cancelArticleSearch(){
@@ -173,7 +201,7 @@ public class FirstTest {
     public String compareArticleTitle(){  //03 Первые тесты на Android/video 10. Assertions.
 
     waitForElementAndClick(
-    By.xpath(SEARCH_DESCRIPTION_ARTICLE),
+    By.xpath(FIRST_ARTICLE_SEARCH_DESCRIPTION),
     "Cannot find article title description",
     10);
 
@@ -184,19 +212,14 @@ public class FirstTest {
     public void clickArticleOpen(){
 
     waitForElementAndClick(
-    By.xpath(SEARCH_DESCRIPTION_ARTICLE),
+    By.xpath(FIRST_ARTICLE_SEARCH_DESCRIPTION),
     "Cannot find article title description",
-    10);
-
-    waitForElementPresent(
-    By.xpath(ARTICLE_TITLE),
-    "Cannot find article title",
     10);
     }
 
     public WebElement waitForTitleElement() {
     return waitForElementPresent(
-    By.xpath(ARTICLE_TITLE),
+    By.xpath(FIRST_ARTICLE_TITLE),
     "Cannot find article title on the page",
     5);
     }
@@ -267,6 +290,146 @@ public class FirstTest {
     30);
     }
 
+    protected void saveFirstArticle(){
+
+    waitForElementAndSendKeys(
+    By.xpath(SEARCH_WIKIPEDIA),
+            FIRST_WORD_FOR_SEARCH,
+    "Cannot find search input",
+    5);
+
+    waitForElementPresent(
+    By.xpath(FIRST_ARTICLE_SEARCH_DESCRIPTION),
+    "Cannot find " + FIRST_ARTICLE_SEARCH_DESCRIPTION + " topic searching by " + FIRST_WORD_FOR_SEARCH,
+     12);
+
+     waitForElementAndClick(
+     By.xpath(FIRST_ARTICLE_SEARCH_DESCRIPTION),
+     "Cannot find article title description",
+     10);
+
+    waitForElementAndClick(
+    By.xpath(SAVE_BUTTON),
+    "Cannot click [Save] button in tab bar",
+    10);
+
+    waitForElementAndClick(
+    By.xpath(ADD_TO_LIST_BUTTON),
+    "Cannot click [ADD TO LIST] button",
+    5);
+
+    waitForElementAndClick(
+    By.xpath(CREATE_NEW_LIST_BUTTON),
+    "Cannot click [Create New] button",
+    10);
+
+    waitForElementAndSendKeys(
+    By.xpath(NAME_OF_THE_LIST),
+    NAME_OF_THE_LIST_VALUE,
+   "Cannot find 'Name of the list' field",
+   5);
+
+    waitForElementAndSendKeys(
+    By.xpath(DESCRIPTION_OF_THE_LIST),
+    DESCRIPTION_OF_THE_LIST_VALUE,
+    "Cannot find 'Name of the list' field",
+    5);
+
+    waitForElementAndClick(
+    By.xpath(OK_BUTTON),
+    "Cannot find 'Description of the list' field",
+    5);
+
+    waitForElementAndClick(
+    By.xpath(VIEW_LIST_BUTTON),
+    "Cannot find [VIEW LIST] button",
+    5);
+
+    waitForElementPresent(
+    By.xpath(FIRST_ARTICLE_TITLE),
+    "Cannot find saved article",
+    10);
+    }
+
+    protected void saveSecondArticle(){
+
+        waitForElementAndSendKeys(
+                By.xpath(SEARCH_WIKIPEDIA),
+                SECOND_WORD_FOR_SEARCH,
+                "Cannot find search input",
+                5);
+
+        waitForElementPresent(
+                By.xpath(SECOND_ARTICLE_SEARCH_DESCRIPTION),
+                "Cannot find " + SECOND_ARTICLE_SEARCH_DESCRIPTION + " topic searching by " + SECOND_WORD_FOR_SEARCH,
+                12);
+
+        waitForElementAndClick(
+                By.xpath(SECOND_ARTICLE_SEARCH_DESCRIPTION),
+                "Cannot find article title description",
+                10);
+
+        waitForElementAndClick(
+                By.xpath(SAVE_BUTTON),
+                "Cannot click [Save] button in tab bar",
+                10);
+
+        waitForElementAndClick(
+                By.xpath(ADD_TO_LIST_BUTTON),
+                "Cannot click [ADD TO LIST] button",
+                5);
+
+        waitForElementPresent(
+                By.xpath(LIST_TITLE_ON_READING_LIST_POP_UP),
+                "Cannot open articles list",
+                10);
+
+        waitForElementAndClick(
+                By.xpath(LIST_TITLE_ON_READING_LIST_POP_UP),
+                "Cannot open articles list",
+                10);
+
+        waitForElementAndClick(
+                By.xpath(VIEW_LIST_BUTTON),
+                "Cannot find [VIEW LIST] button",
+                5);
+
+        waitForElementPresent(
+                By.xpath(SECOND_ARTICLE_TITLE),
+                "Cannot find the second saved article",
+                10);
+    }
+
+    public void backFromSaveList(){
+
+    waitForElementAndClick(
+    By.xpath(BACK_BUTTON),
+    "Cannot click [<] button the first time",
+    5);
+
+    waitForElementPresent(
+    By.xpath(BACK_BUTTON),
+    "Cannot find [<] button",
+    5);
+
+    waitForElementAndClick(
+    By.xpath(BACK_BUTTON),
+    "Cannot click [<] button the second time",
+    5);
+
+    waitForElementAndClick(
+    By.xpath(CANCEL_SEARCH_BUTTON),
+    "Cannot find [X] button on the page",
+   5);
+
+    waitForElementPresent(
+    By.xpath(SEARCH_WIKIPEDIA),
+    "Cannot find 'Search Wikipedia' field",
+    5);
+
+    }
+
+
     protected void swipeUpToFindElement(By by, String error_message, int max_swipes){ //метод свайпа до заданного элемента (например, свайп вверх до футера, низа страницы).
     int already_swiped = 0;
     while (driver.findElements(by).size()==0){
@@ -279,45 +442,4 @@ public class FirstTest {
     ++already_swiped;
         }
     }
-
-    protected void saveArticle(){
-
-        waitForElementAndClick(
-                By.xpath(SAVE_BUTTON),
-                "Cannot click [Save] button in tab bar",
-                10);
-
-        waitForElementAndClick(
-                By.xpath(ADD_TO_LIST_BUTTON),
-                "Cannot click [ADD TO LIST] button",
-                5);
-
-        waitForElementAndClick(
-                By.xpath(CREATE_NEW_LIST_BUTTON),
-                "Cannot click [Create New] button",
-                10);
-
-        waitForElementAndSendKeys(
-                By.xpath(NAME_OF_THE_LIST),
-                NAME_OF_THE_LIST_VALUE,
-                "Cannot find 'Name of the list' field",
-                5);
-
-        waitForElementAndSendKeys(
-                By.xpath(DESCRIPTION_OF_THE_LIST),
-                DESCRIPTION_OF_THE_LIST_VALUE,
-                "Cannot find 'Name of the list' field",
-                5);
-
-        waitForElementAndClick(
-                By.xpath(OK_BUTTON),
-                "Cannot find 'Description of the list' field",
-                5);
-
-
-
-
-    }
-
-
 }
