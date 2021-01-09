@@ -130,17 +130,15 @@ public class FirstTest {
     }
 
     @Test
-    public void testSaveTwoArticles(){
+    public void testSaveTwoArticles(){ // Ex5: Тест: сохранение двух статей
     skipButtonClick();
     searchWikipediaClick();
     saveFirstArticle();
     backFromSaveList();
     saveSecondArticle();
-
+    swipeArticleToDelete();
+    articleAvailabilityCheck();
     }
-
-    //navigationBack();
-    //        cancelArticleSearch();
 
     public void skipButtonClick(){
     waitForElementAndClick(
@@ -400,7 +398,7 @@ public class FirstTest {
                 10);
     }
 
-    public void backFromSaveList(){
+    protected void backFromSaveList(){
 
     waitForElementAndClick(
     By.xpath(BACK_BUTTON),
@@ -429,6 +427,24 @@ public class FirstTest {
 
     }
 
+    protected void swipeArticleToDelete(){
+        
+    swipeElementToTheLeft(
+    By.xpath(FIRST_ARTICLE_TITLE),
+    "Cannot find saved first article");
+
+    waitForElementNotPresent(
+    By.xpath(FIRST_ARTICLE_TITLE),
+   "First article is still presented in the saved list",
+    12);
+    }
+
+    protected void articleAvailabilityCheck(){
+    waitForElementPresent(
+    By.xpath(SECOND_ARTICLE_TITLE),
+    "Cannot find the second article titled " + SECOND_WORD_FOR_SEARCH,
+    12);
+    }
 
     protected void swipeUpToFindElement(By by, String error_message, int max_swipes){ //метод свайпа до заданного элемента (например, свайп вверх до футера, низа страницы).
     int already_swiped = 0;
@@ -441,5 +457,27 @@ public class FirstTest {
     swipeUpQuick();
     ++already_swiped;
         }
+    }
+
+    public void swipeElementToTheLeft(By by, String error_message){
+    WebElement element = waitForElementPresent(
+    by,
+    error_message,
+    10);
+
+    int left_x = element.getLocation().getX();
+    int right_x = left_x + element.getSize().getWidth();
+    int upper_y = element.getLocation().getY();
+    int lower_y = upper_y + element.getSize().getHeight();
+    int middle_y = (upper_y + lower_y) /2;
+
+    TouchAction action = new TouchAction(driver);
+
+    action.
+            press(PointOption.point(right_x,middle_y)).
+            waitAction(WaitOptions.waitOptions(Duration.ofMillis(300))).
+            moveTo(PointOption.point(left_x, middle_y)).
+            release().
+            perform();
     }
 }
