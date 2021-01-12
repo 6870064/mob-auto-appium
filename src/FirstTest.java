@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -45,7 +46,6 @@ public class FirstTest {
     String NO_RESULTS_STRING = "//android.widget.TextView[@resource-id='org.wikipedia:id/results_text']";
     String NOT_EMPTY_SEARCH_VALUE = "Rammstein discography";
     String NOT_EMPTY_SEARCH_LOCATOR = "//*[@resource-id='org.wikipedia:id/search_results_container']";
-//    String NOT_EMPTY_SEARCH_LOCATOR = "//*[@resource-id='org.wikipedia:id/search_results_container']/*[@resource-id='org.wikipedia:id/page_list_item_title']";
 
     private AppiumDriver driver; //обьявление новой переменной driver
 
@@ -59,6 +59,7 @@ public class FirstTest {
         capabilities.setCapability("automationName","Appium");
         capabilities.setCapability("appPackage","org.wikipedia");
         capabilities.setCapability("appActivity",".main.MainActivity");
+        capabilities.setCapability("orientation","PORTRAIT");
         capabilities.setCapability("app","/Users/dzmitryviachaslavau/Documents/MobileAutomationCourse/HomeTasks/mob-auto-appium/apks/org.wikipedia.apk");
 
         driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities); //запуск Android driver и передача ему capabilities
@@ -151,6 +152,23 @@ public class FirstTest {
     searchWikipediaClick();
     assertTitleCheck();
     }
+
+    @Test
+   public void firstTestToRotate(){ //Ex7*: Поворот экрана. Первый тест, который падает
+   skipButtonClick();
+   searchWikipediaClick();
+   searchArticleTitle();
+   rotateToLandscape();
+   compareArticleTitle();
+   }
+
+  @Test
+  public void secondTestToRotate(){ //Ex7*: Поворот экрана. Второй тест, который не падает
+      skipButtonClick();
+      searchWikipediaClick();
+      rotateToLandscape();
+      rotateToPortrait();
+   }
 
     @Test
     public void testAppInBackground(){
@@ -538,5 +556,13 @@ public class FirstTest {
         Assert.assertTrue(
                 "We found too few results!",
                 amount_of_search_results >0);
+    }
+
+    public void rotateToLandscape(){
+        driver.rotate(ScreenOrientation.LANDSCAPE);
+    }
+
+    public void rotateToPortrait(){
+        driver.rotate(ScreenOrientation.PORTRAIT);
     }
 }
