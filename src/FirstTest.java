@@ -4,6 +4,7 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -15,6 +16,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.URL;
 import java.time.Duration;
+import java.util.List;
 
 public class FirstTest {
 
@@ -41,6 +43,9 @@ public class FirstTest {
     String BACK_BUTTON = "//android.widget.ImageButton[@content-desc='Navigate up']";
     String VIEW_LIST_BUTTON = "//*[contains(@text,'VIEW LIST')]";
     String NO_RESULTS_STRING = "//android.widget.TextView[@resource-id='org.wikipedia:id/results_text']";
+    String NOT_EMPTY_SEARCH_VALUE = "Rammstein discography";
+    String NOT_EMPTY_SEARCH_LOCATOR = "//*[@resource-id='org.wikipedia:id/search_results_container']";
+//    String NOT_EMPTY_SEARCH_LOCATOR = "//*[@resource-id='org.wikipedia:id/search_results_container']/*[@resource-id='org.wikipedia:id/page_list_item_title']";
 
     private AppiumDriver driver; //обьявление новой переменной driver
 
@@ -140,6 +145,23 @@ public class FirstTest {
     articleAvailabilityCheck();
     }
 
+    @Test
+    public void testAmountOfNotEmptySearch(){ //Ex6: Тест: Assert Title
+    skipButtonClick();
+    searchWikipediaClick();
+    assertTitleCheck();
+    }
+
+    @Test
+    public void testAppInBackground(){
+    skipButtonClick();
+    searchWikipediaClick();
+    searchArticleTitle();
+    clickArticleOpen();
+    appInBackground();
+    articleTitleAfterBackground();
+    }
+
     public void skipButtonClick(){
     waitForElementAndClick(
     By.xpath(SKIP_BUTTON),
@@ -205,6 +227,14 @@ public class FirstTest {
 
     WebElement title_element = waitForTitleElement();
     return title_element.getAttribute("text");
+    }
+
+    public void articleTitleAfterBackground(){
+
+    waitForElementPresent(
+    By.xpath(FIRST_ARTICLE_TITLE),
+    "Cannot find article title after being in background",
+    10);
     }
 
     public void clickArticleOpen(){
@@ -428,7 +458,7 @@ public class FirstTest {
     }
 
     protected void swipeArticleToDelete(){
-        
+
     swipeElementToTheLeft(
     By.xpath(FIRST_ARTICLE_TITLE),
     "Cannot find saved first article");
@@ -479,5 +509,34 @@ public class FirstTest {
             moveTo(PointOption.point(left_x, middle_y)).
             release().
             perform();
+    }
+    public void appInBackground(){
+        driver.runAppInBackground(Duration.ofSeconds(3));
+    }
+
+    private int getAmountOfElements(By by){
+        List elements = driver.findElements(by);
+        return elements.size();
+    }
+
+    public void assertTitleCheck(){
+        waitForElementAndSendKeys(
+                By.xpath(SEARCH_WIKIPEDIA),
+                NOT_EMPTY_SEARCH_VALUE,
+                "Cannot find search input",
+                10);
+
+        waitForElementPresent(
+                By.xpath(NOT_EMPTY_SEARCH_LOCATOR),
+                "Cannot find anything by the request " + NOT_EMPTY_SEARCH_VALUE,
+                10);
+
+        int amount_of_search_results = getAmountOfElements(
+                By.xpath(NOT_EMPTY_SEARCH_LOCATOR)
+        );
+
+        Assert.assertTrue(
+                "We found too few results!",
+                amount_of_search_results >0);
     }
 }
