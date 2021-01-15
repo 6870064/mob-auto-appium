@@ -1,25 +1,19 @@
-import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.TouchAction;
-import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
-import org.junit.After;
+import lib.CoreTestCase;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.net.URL;
 import java.time.Duration;
 import java.util.List;
 
-public class FirstTest {
+public class FirstTest extends CoreTestCase {
 
     String SKIP_BUTTON = "//*[contains(@text,'SKIP')]";
     String SEARCH_WIKIPEDIA = "//*[contains(@text,'Search Wikipedia')]";
@@ -46,29 +40,6 @@ public class FirstTest {
     String NO_RESULTS_STRING = "//android.widget.TextView[@resource-id='org.wikipedia:id/results_text']";
     String NOT_EMPTY_SEARCH_VALUE = "Rammstein discography";
     String NOT_EMPTY_SEARCH_LOCATOR = "//*[@resource-id='org.wikipedia:id/search_results_container']";
-
-    private AppiumDriver driver; //обьявление новой переменной driver
-
-    @Before
-    public void setUp() throws Exception{ //установка всех необходимых параметров, чтобы запустить Appium driver и поднять апп на эмуляторе
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-
-        capabilities.setCapability("platformName","Android");
-        capabilities.setCapability("deviceName","AndroidTestDevice");
-        capabilities.setCapability("platformVersion","8.0");
-        capabilities.setCapability("automationName","Appium");
-        capabilities.setCapability("appPackage","org.wikipedia");
-        capabilities.setCapability("appActivity",".main.MainActivity");
-        capabilities.setCapability("orientation","PORTRAIT");
-        capabilities.setCapability("app","/Users/dzmitryviachaslavau/Documents/MobileAutomationCourse/HomeTasks/mob-auto-appium/apks/org.wikipedia.apk");
-
-        driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities); //запуск Android driver и передача ему capabilities
-    }
-
-    @After
-    public void tearDown(){ // tear down - метод используется, чтобы выключить Appium driver и закрыть апп на эмуляторе
-        driver.quit();
-    }
 
     @Test
     public void testArticleSearch() {
@@ -159,7 +130,8 @@ public class FirstTest {
    searchWikipediaClick();
    searchArticleTitle();
    rotateToLandscape();
-   compareArticleTitle();
+   clickArticleOpen();
+   
    }
 
   @Test
@@ -238,13 +210,18 @@ public class FirstTest {
 
     public String compareArticleTitle(){  //03 Первые тесты на Android/video 10. Assertions.
 
+    waitForElementPresent(
+    By.xpath(FIRST_ARTICLE_TITLE),
+    "Cannot find article title",
+    10);
+
     waitForElementAndClick(
-    By.xpath(FIRST_ARTICLE_SEARCH_DESCRIPTION),
-    "Cannot find article title description",
+    By.xpath(FIRST_ARTICLE_TITLE),
+    "Cannot click article title description",
     10);
 
     WebElement title_element = waitForTitleElement();
-    return title_element.getAttribute("text");
+    return title_element.getText();
     }
 
     public void articleTitleAfterBackground(){
