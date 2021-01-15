@@ -11,7 +11,7 @@ public class CoreTestCase extends TestCase { //сможем использова
     private static String AppiumURL = "http://127.0.0.1:4723/wd/hub";
 
     @Override
-    public void setUp() throws Exception{ //установка всех необходимых параметров, чтобы запустить Appium driver и поднять апп на эмуляторе
+    protected void setUp() throws Exception{ //установка всех необходимых параметров, чтобы запустить Appium driver и поднять апп на эмуляторе
 
     super.setUp();
 
@@ -30,7 +30,7 @@ public class CoreTestCase extends TestCase { //сможем использова
     }
 
     @Override
-    public void tearDown() throws Exception{ // tear down - метод используется, чтобы выключить Appium driver и закрыть апп на эмуляторе
+    protected void tearDown() throws Exception{ // tear down - метод используется, чтобы выключить Appium driver и закрыть апп на эмуляторе
     driver.quit();
     super.tearDown();
     }
