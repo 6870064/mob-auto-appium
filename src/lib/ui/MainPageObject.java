@@ -23,96 +23,42 @@ public class MainPageObject {
         this.driver = driver;
     }
 
-    String SKIP_BUTTON = "//*[contains(@text,'SKIP')]";
-    String SEARCH_WIKIPEDIA = "//*[contains(@text,'Search Wikipedia')]";
-    String FIRST_WORD_FOR_SEARCH = "Java";
-    String FIRST_ARTICLE_SEARCH_DESCRIPTION = "//*[@resource-id='org.wikipedia:id/search_container']//*[@text='Object-oriented programming language']";
-    String SECOND_WORD_FOR_SEARCH = "Rammstein";
-    String SECOND_ARTICLE_SEARCH_DESCRIPTION = "//*[@resource-id='org.wikipedia:id/search_container']//*[@text='German industrial metal band']";
-    String WORD_FOR_EMPTY_SEARCH = "Bla zzz qwerty";
-    String CANCEL_SEARCH_BUTTON = "//android.widget.ImageView[@resource-id='org.wikipedia:id/search_close_btn']";
-    String FIRST_ARTICLE_TITLE = "//*[contains(@text,'Java (programming language)')]";
-    String SECOND_ARTICLE_TITLE = "//*[contains(@text,'Rammstein')]";
-    String FOOTER_ELEMENT = "//*[contains(@text,'View article in browser')]";
-    String SAVE_BUTTON = "//android.widget.TextView[@resource-id='org.wikipedia:id/article_menu_bookmark']";
-    String ADD_TO_LIST_BUTTON = "//*[contains(@text,'ADD TO LIST')]";
-    String CREATE_NEW_LIST_BUTTON = "//*[contains(@text,'Create new')]";
-    String NAME_OF_THE_LIST = "//*[contains(@text,'Name of this list')]";
-    String DESCRIPTION_OF_THE_LIST = "//*[contains(@text,'Description (optional)')]";
-    String OK_BUTTON = "//*[contains(@text,'OK')]";
-    String NAME_OF_THE_LIST_VALUE = "First list title";
-    String DESCRIPTION_OF_THE_LIST_VALUE = "First list description";
-    String LIST_TITLE_ON_READING_LIST_POP_UP = "//android.widget.TextView[@resource-id='org.wikipedia:id/item_title']";
-    String BACK_BUTTON = "//android.widget.ImageButton[@content-desc='Navigate up']";
-    String VIEW_LIST_BUTTON = "//*[contains(@text,'VIEW LIST')]";
-    String NO_RESULTS_STRING = "//android.widget.TextView[@resource-id='org.wikipedia:id/results_text']";
-    String NOT_EMPTY_SEARCH_VALUE = "Rammstein discography";
-    String NOT_EMPTY_SEARCH_LOCATOR = "//*[@resource-id='org.wikipedia:id/search_results_container']";
+    private static final String
+    SKIP_BUTTON = "//*[contains(@text,'SKIP')]",
+    SEARCH_INIT_ELEMENT = "//*[contains(@text,'Search Wikipedia')]",
+    FIRST_WORD_FOR_SEARCH = "Java",
+    FIRST_ARTICLE_SEARCH_DESCRIPTION = "//*[@resource-id='org.wikipedia:id/search_container']//*[@text='Object-oriented programming language']",
+    SECOND_WORD_FOR_SEARCH = "Rammstein",
+    SECOND_ARTICLE_SEARCH_DESCRIPTION = "//*[@resource-id='org.wikipedia:id/search_container']//*[@text='German industrial metal band']",
+    WORD_FOR_EMPTY_SEARCH = "Bla zzz qwerty",
+    CANCEL_SEARCH_BUTTON = "//android.widget.ImageView[@resource-id='org.wikipedia:id/search_close_btn']",
+    FIRST_ARTICLE_TITLE = "//*[contains(@text,'Java (programming language)')]",
+    SECOND_ARTICLE_TITLE = "//*[contains(@text,'Rammstein')]",
+    FOOTER_ELEMENT = "//*[contains(@text,'View article in browser')]",
+    SAVE_BUTTON = "//android.widget.TextView[@resource-id='org.wikipedia:id/article_menu_bookmark']",
+    ADD_TO_LIST_BUTTON = "//*[contains(@text,'ADD TO LIST')]",
+    CREATE_NEW_LIST_BUTTON = "//*[contains(@text,'Create new')]",
+    NAME_OF_THE_LIST = "//*[contains(@text,'Name of this list')]",
+    DESCRIPTION_OF_THE_LIST = "//*[contains(@text,'Description (optional)')]",
+    OK_BUTTON = "//*[contains(@text,'OK')]",
+    NAME_OF_THE_LIST_VALUE = "First list title",
+    DESCRIPTION_OF_THE_LIST_VALUE = "First list description",
+    LIST_TITLE_ON_READING_LIST_POP_UP = "//android.widget.TextView[@resource-id='org.wikipedia:id/item_title']",
+    BACK_BUTTON = "//android.widget.ImageButton[@content-desc='Navigate up']",
+    VIEW_LIST_BUTTON = "//*[contains(@text,'VIEW LIST')]",
+    NO_RESULTS_STRING = "//android.widget.TextView[@resource-id='org.wikipedia:id/results_text']",
+    NOT_EMPTY_SEARCH_VALUE = "Rammstein discography",
+    NOT_EMPTY_SEARCH_LOCATOR = "//*[@resource-id='org.wikipedia:id/search_results_container']";
 
-    public void skipButtonClick(){
-        waitForElementAndClick(
-                By.xpath(SKIP_BUTTON),
-                "Cannot find [SKIP] button",
-                5);
-    }
-
-    public void searchWikipediaClick(){
-
-        waitForElementAndClick(
-                By.xpath(SEARCH_WIKIPEDIA) ,
-                "Cannot find search input",
-                5);
-    }
-
-    public void searchArticleTitle(){
-
-        waitForElementAndSendKeys(
-                By.xpath(SEARCH_WIKIPEDIA),
-                FIRST_WORD_FOR_SEARCH,
-                "Cannot find search input",
-                5);
-
-        waitForElementPresent(
-                By.xpath(FIRST_ARTICLE_SEARCH_DESCRIPTION),
-                "Cannot find " + FIRST_ARTICLE_SEARCH_DESCRIPTION + " topic searching by " + FIRST_WORD_FOR_SEARCH,
-                12);
-    }
-
-    public void searchWithEmptyResult(){
-
-        waitForElementAndSendKeys(
-                By.xpath(SEARCH_WIKIPEDIA),
-                WORD_FOR_EMPTY_SEARCH,
-                "Cannot find search input",
-                5);
-
-        waitForElementPresent(
-                By.xpath(NO_RESULTS_STRING),
-                "Cannot find " + NO_RESULTS_STRING + " topic searching by " + WORD_FOR_EMPTY_SEARCH,
-                12);
-    }
-
-    public void cancelArticleSearch(){
-
-        waitForElementAndClick(
-                By.xpath(CANCEL_SEARCH_BUTTON),
-                "Cannot find [x] cancel search button",
-                10);
-
-        waitForElementNotPresent(
-                By.xpath(CANCEL_SEARCH_BUTTON),
-                "[X] is still presented on the page",
-                5);
-    }
 
     public String compareArticleTitle(){  //03 Первые тесты на Android/video 10. Assertions.
 
-        waitForElementPresent(
+        this.waitForElementPresent(
                 By.xpath(FIRST_ARTICLE_TITLE),
                 "Cannot find article title",
                 10);
 
-        waitForElementAndClick(
+        this.waitForElementAndClick(
                 By.xpath(FIRST_ARTICLE_TITLE),
                 "Cannot click article title description",
                 10);
@@ -123,7 +69,7 @@ public class MainPageObject {
 
     public void articleTitleAfterBackground(){
 
-        waitForElementPresent(
+        this.waitForElementPresent(
                 By.xpath(FIRST_ARTICLE_TITLE),
                 "Cannot find article title after being in background",
                 10);
@@ -131,30 +77,30 @@ public class MainPageObject {
 
     public void clickArticleOpen(){
 
-        waitForElementAndClick(
+        this.waitForElementAndClick(
                 By.xpath(FIRST_ARTICLE_SEARCH_DESCRIPTION),
                 "Cannot find article title description",
                 10);
     }
 
     public WebElement waitForTitleElement() {
-        return waitForElementPresent(
+        return this.waitForElementPresent(
                 By.xpath(FIRST_ARTICLE_TITLE),
                 "Cannot find article title on the page",
                 5);
     }
 
-    private WebElement waitForElementPresent(By by, String error_message, long timeoutInSeconds){ //поиск элемента и ожидание его появления
+    public WebElement waitForElementPresent(By by, String error_message, long timeoutInSeconds){ //поиск элемента и ожидание его появления
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds); //метод Selenium
         wait.withMessage(error_message + "\n");
         return wait.until(ExpectedConditions.presenceOfElementLocated(by));
     }
 
-    private WebElement waitForElementPresent(By by, String error_message){ //Перегруженный метод поиска элемента по Xpath и ожидание его появления
+    public WebElement waitForElementPresent(By by, String error_message){ //Перегруженный метод поиска элемента по Xpath и ожидание его появления
         return waitForElementPresent(by, error_message,5);
     }
 
-    private WebElement waitForElementAndClick(By by, String error_message, long timeOutInSeconds){ //Ожидание отображение элемента и клик по нему
+    public WebElement waitForElementAndClick(By by, String error_message, long timeOutInSeconds){ //Ожидание отображение элемента и клик по нему
         WebElement element = waitForElementPresent(by, error_message, timeOutInSeconds);
         element.click();
         return element;
@@ -166,13 +112,13 @@ public class MainPageObject {
         return element;
     }
 
-    private WebElement waitForElementAndSendKeys(By by, String value, String error_message, long timeOutInSeconds){ //Ожидание отображение элемента и введение в него текста
+    public WebElement waitForElementAndSendKeys(By by, String value, String error_message, long timeOutInSeconds){ //Ожидание отображение элемента и введение в него текста
         WebElement element = waitForElementPresent(by, error_message, timeOutInSeconds);
         element.sendKeys(value);
         return element;
     }
 
-    private boolean waitForElementNotPresent(By by, String error_message, long timeoutInSeconds){ //Метод, определяющий отсутствие элемента на странице
+    public boolean waitForElementNotPresent(By by, String error_message, long timeoutInSeconds){ //Метод, определяющий отсутствие элемента на странице
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
         wait.withMessage(error_message + "\n");
         return wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
@@ -204,7 +150,7 @@ public class MainPageObject {
     }
 
     public void swipeUpToElement(){
-        swipeUpToFindElement(
+        this.swipeUpToFindElement(
                 By.xpath(FOOTER_ELEMENT),
                 "Can't find footer element 'View article in browser' link",
                 30);
@@ -212,60 +158,60 @@ public class MainPageObject {
 
     public void saveFirstArticle(){
 
-        waitForElementAndSendKeys(
-                By.xpath(SEARCH_WIKIPEDIA),
+        this.waitForElementAndSendKeys(
+                By.xpath(SEARCH_INIT_ELEMENT),
                 FIRST_WORD_FOR_SEARCH,
                 "Cannot find search input",
                 5);
 
-        waitForElementPresent(
+        this.waitForElementPresent(
                 By.xpath(FIRST_ARTICLE_SEARCH_DESCRIPTION),
                 "Cannot find " + FIRST_ARTICLE_SEARCH_DESCRIPTION + " topic searching by " + FIRST_WORD_FOR_SEARCH,
                 12);
 
-        waitForElementAndClick(
+        this.waitForElementAndClick(
                 By.xpath(FIRST_ARTICLE_SEARCH_DESCRIPTION),
                 "Cannot find article title description",
                 10);
 
-        waitForElementAndClick(
+        this.waitForElementAndClick(
                 By.xpath(SAVE_BUTTON),
                 "Cannot click [Save] button in tab bar",
                 10);
 
-        waitForElementAndClick(
+        this.waitForElementAndClick(
                 By.xpath(ADD_TO_LIST_BUTTON),
                 "Cannot click [ADD TO LIST] button",
                 5);
 
-        waitForElementAndClick(
+        this.waitForElementAndClick(
                 By.xpath(CREATE_NEW_LIST_BUTTON),
                 "Cannot click [Create New] button",
                 10);
 
-        waitForElementAndSendKeys(
+        this.waitForElementAndSendKeys(
                 By.xpath(NAME_OF_THE_LIST),
                 NAME_OF_THE_LIST_VALUE,
                 "Cannot find 'Name of the list' field",
                 5);
 
-        waitForElementAndSendKeys(
+        this.waitForElementAndSendKeys(
                 By.xpath(DESCRIPTION_OF_THE_LIST),
                 DESCRIPTION_OF_THE_LIST_VALUE,
                 "Cannot find 'Name of the list' field",
                 5);
 
-        waitForElementAndClick(
+        this.waitForElementAndClick(
                 By.xpath(OK_BUTTON),
                 "Cannot find 'Description of the list' field",
                 5);
 
-        waitForElementAndClick(
+        this.waitForElementAndClick(
                 By.xpath(VIEW_LIST_BUTTON),
                 "Cannot find [VIEW LIST] button",
                 5);
 
-        waitForElementPresent(
+        this.waitForElementPresent(
                 By.xpath(FIRST_ARTICLE_TITLE),
                 "Cannot find saved article",
                 10);
@@ -273,48 +219,48 @@ public class MainPageObject {
 
     public void saveSecondArticle(){
 
-        waitForElementAndSendKeys(
-                By.xpath(SEARCH_WIKIPEDIA),
+        this.waitForElementAndSendKeys(
+                By.xpath(SEARCH_INIT_ELEMENT),
                 SECOND_WORD_FOR_SEARCH,
                 "Cannot find search input",
                 5);
 
-        waitForElementPresent(
+        this.waitForElementPresent(
                 By.xpath(SECOND_ARTICLE_SEARCH_DESCRIPTION),
                 "Cannot find " + SECOND_ARTICLE_SEARCH_DESCRIPTION + " topic searching by " + SECOND_WORD_FOR_SEARCH,
                 12);
 
-        waitForElementAndClick(
+        this.waitForElementAndClick(
                 By.xpath(SECOND_ARTICLE_SEARCH_DESCRIPTION),
                 "Cannot find article title description",
                 10);
 
-        waitForElementAndClick(
+        this.waitForElementAndClick(
                 By.xpath(SAVE_BUTTON),
                 "Cannot click [Save] button in tab bar",
                 10);
 
-        waitForElementAndClick(
+        this.waitForElementAndClick(
                 By.xpath(ADD_TO_LIST_BUTTON),
                 "Cannot click [ADD TO LIST] button",
                 5);
 
-        waitForElementPresent(
+        this.waitForElementPresent(
                 By.xpath(LIST_TITLE_ON_READING_LIST_POP_UP),
                 "Cannot open articles list",
                 10);
 
-        waitForElementAndClick(
+        this.waitForElementAndClick(
                 By.xpath(LIST_TITLE_ON_READING_LIST_POP_UP),
                 "Cannot open articles list",
                 10);
 
-        waitForElementAndClick(
+        this.waitForElementAndClick(
                 By.xpath(VIEW_LIST_BUTTON),
                 "Cannot find [VIEW LIST] button",
                 5);
 
-        waitForElementPresent(
+        this.waitForElementPresent(
                 By.xpath(SECOND_ARTICLE_TITLE),
                 "Cannot find the second saved article",
                 10);
@@ -322,28 +268,28 @@ public class MainPageObject {
 
     public void backFromSaveList(){
 
-        waitForElementAndClick(
+        this.waitForElementAndClick(
                 By.xpath(BACK_BUTTON),
                 "Cannot click [<] button the first time",
                 5);
 
-        waitForElementPresent(
+        this.waitForElementPresent(
                 By.xpath(BACK_BUTTON),
                 "Cannot find [<] button",
                 5);
 
-        waitForElementAndClick(
+        this.waitForElementAndClick(
                 By.xpath(BACK_BUTTON),
                 "Cannot click [<] button the second time",
                 5);
 
-        waitForElementAndClick(
+        this.waitForElementAndClick(
                 By.xpath(CANCEL_SEARCH_BUTTON),
                 "Cannot find [X] button on the page",
                 5);
 
-        waitForElementPresent(
-                By.xpath(SEARCH_WIKIPEDIA),
+        this.waitForElementPresent(
+                By.xpath(SEARCH_INIT_ELEMENT),
                 "Cannot find 'Search Wikipedia' field",
                 5);
 
@@ -351,18 +297,18 @@ public class MainPageObject {
 
     public void swipeArticleToDelete(){
 
-        swipeElementToTheLeft(
+        this.swipeElementToTheLeft(
                 By.xpath(FIRST_ARTICLE_TITLE),
                 "Cannot find saved first article");
 
-        waitForElementNotPresent(
+        this.waitForElementNotPresent(
                 By.xpath(FIRST_ARTICLE_TITLE),
                 "First article is still presented in the saved list",
                 12);
     }
 
     public void articleAvailabilityCheck(){
-        waitForElementPresent(
+        this.waitForElementPresent(
                 By.xpath(SECOND_ARTICLE_TITLE),
                 "Cannot find the second article titled " + SECOND_WORD_FOR_SEARCH,
                 12);
@@ -373,7 +319,7 @@ public class MainPageObject {
         while (driver.findElements(by).size()==0){
 
             if (already_swiped > max_swipes){
-                waitForElementPresent(by, "Cannot find element by swiping up. \n" + error_message,0);
+                this.waitForElementPresent(by, "Cannot find element by swiping up. \n" + error_message,0);
                 return;
             }
             swipeUpQuick();
@@ -412,13 +358,13 @@ public class MainPageObject {
     }
 
     public void assertTitleCheck(){
-        waitForElementAndSendKeys(
-                By.xpath(SEARCH_WIKIPEDIA),
+        this.waitForElementAndSendKeys(
+                By.xpath(SEARCH_INIT_ELEMENT),
                 NOT_EMPTY_SEARCH_VALUE,
                 "Cannot find search input",
                 10);
 
-        waitForElementPresent(
+        this.waitForElementPresent(
                 By.xpath(NOT_EMPTY_SEARCH_LOCATOR),
                 "Cannot find anything by the request " + NOT_EMPTY_SEARCH_VALUE,
                 10);
