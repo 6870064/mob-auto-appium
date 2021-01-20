@@ -44,7 +44,7 @@ public class SearchPageObject extends MainPageObject{
     5);
     }
 
-    public void searchWikipediaClick(){
+    public void initSearchInput(){
 
     this.waitForElementAndClick(
     By.xpath(SEARCH_INIT_ELEMENT) ,
@@ -52,11 +52,11 @@ public class SearchPageObject extends MainPageObject{
     5);
     }
 
-    public void searchArticleTitle(){
+    public void searchArticleTitle(String search_line){
 
     this.waitForElementAndSendKeys(
     By.xpath(SEARCH_INIT_ELEMENT),
-    FIRST_WORD_FOR_SEARCH,
+    search_line,
     "Cannot find search input",
     5);
     }
@@ -101,9 +101,16 @@ public class SearchPageObject extends MainPageObject{
     /*TEMPLATES METHODS */
 
     public void waitForSearchResult(String substring){
-
     String search_result_xpath = getResultSearchElement(substring);
     this.waitForElementPresent(By.xpath(search_result_xpath), "Cannot find search result with substring " +substring);
+    }
+
+    public void clickByArticleWithSubstring(String substring){
+    String search_result_xpath = getResultSearchElement(substring);
+    this.waitForElementAndClick(
+    By.xpath(search_result_xpath),
+    "Cannot find and click search result with substring " +substring,
+    10);
     }
 
 }
