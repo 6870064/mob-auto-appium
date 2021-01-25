@@ -14,18 +14,19 @@ public class ArticlePageObject extends MainPageObject {
     FOOTER_ELEMENT = "//*[contains(@text,'View article in browser')]";
 
     public WebElement waitForTitleElement(){
-        return this.waitForElementPresent(By.xpath(FIRST_ARTICLE_TITLE), "Cannot find article on the page!", 15);
+    return this.waitForElementPresent(By.xpath(FIRST_ARTICLE_TITLE), "Cannot find article on the page!", 15);
     }
 
     public String getArticleTitle(){
-        WebElement title_element = waitForTitleElement();
-        return title_element.getAttribute("text");
+    WebElement title_element = waitForTitleElement();
+    return title_element.getAttribute("text");
     }
 
     public void swipeToFooter(){
-        this.swipeUpToFindElement(
-                By.xpath(FOOTER_ELEMENT),
-                "Cannot find footer element",
-                100);
+    this.swipeUpToFindElement(
+    By.xpath(FOOTER_ELEMENT),
+    "Can't find footer element 'View article in browser' link",
+    300);
     }
+
 }

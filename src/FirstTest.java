@@ -17,7 +17,8 @@ public class FirstTest extends CoreTestCase {
     public String Article_description = "Object-oriented programming language";
     public String Expected_article_title = "Java (programming language)";
     public String First_word_for_search = "Java";
-    public String Second_word_for_search = "Appium";
+    public String Second_word_for_search = "Rammstein";
+    public String Second_article_description = "German industrial metal band";
 
     @Test
     public void testArticleSearch() {
@@ -65,39 +66,40 @@ public class FirstTest extends CoreTestCase {
 
     @Test
     public void testArticleSwipe() {
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
-        SearchPageObject.skipButtonClick();
-        SearchPageObject.initSearchInput();
-        SearchPageObject.searchArticleTitle(First_word_for_search);
-        SearchPageObject.clickByArticleWithSubstring(Article_description);
+    SearchPageObject SearchPageObject = new SearchPageObject(driver);
+    SearchPageObject.skipButtonClick();
+    SearchPageObject.initSearchInput();
+    SearchPageObject.searchArticleTitle(First_word_for_search);
+    SearchPageObject.clickByArticleWithSubstring(Article_description);
 
-        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
-        ArticlePageObject.waitForTitleElement();
-        ArticlePageObject.swipeToFooter();
+    ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+    ArticlePageObject.waitForTitleElement();
+    ArticlePageObject.swipeToFooter();
     }
 
+    @Test
+    public void testArticleSwipeToFooter(){
+    SearchPageObject SearchPageObject = new SearchPageObject(driver);
 
-//    int amountOfSwipes = 12;
-//
-//    for (int i = 0; i <=amountOfSwipes; i++){
-//     MainPageObject.swipeUp(2000);
-//
-//    @Test
-//    public void testArticleSwipeToFooter(){
-//    MainPageObject.skipButtonClick();
-//    MainPageObject.searchWikipediaClick();
-//    MainPageObject.searchArticleTitle();
-//    MainPageObject.clickArticleOpen();
-//   MainPageObject.swipeUpToElement();
-//    }
-//
-//    @Test
-//    public void testEmptySearch(){
-//    MainPageObject.skipButtonClick();
-//    MainPageObject.searchWikipediaClick();
-//    MainPageObject.searchWithEmptyResult();
-//    }
-//
+    SearchPageObject.skipButtonClick();
+    SearchPageObject.initSearchInput();
+    SearchPageObject.searchArticleTitle(Second_word_for_search);
+    SearchPageObject.clickByArticleWithSubstring(Second_article_description);
+
+    ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+    ArticlePageObject.swipeToFooter();
+    }
+
+   @Test
+    public void testEmptySearch(){
+
+    SearchPageObject SearchPageObject = new SearchPageObject(driver);
+
+    SearchPageObject.skipButtonClick();
+    SearchPageObject.initSearchInput();
+    SearchPageObject.searchWithEmptyResult();
+    }
+
 //    @Test
 //    public void testSaveOneArticle(){
 //    MainPageObject.skipButtonClick();

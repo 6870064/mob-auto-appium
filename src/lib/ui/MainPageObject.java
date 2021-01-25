@@ -24,13 +24,11 @@ public class MainPageObject {
     }
 
     private static final String
-    SKIP_BUTTON = "//*[contains(@text,'SKIP')]",
     SEARCH_INIT_ELEMENT = "//*[contains(@text,'Search Wikipedia')]",
     FIRST_WORD_FOR_SEARCH = "Java",
     FIRST_ARTICLE_SEARCH_DESCRIPTION = "//*[@resource-id='org.wikipedia:id/search_container']//*[@text='Object-oriented programming language']",
     SECOND_WORD_FOR_SEARCH = "Rammstein",
     SECOND_ARTICLE_SEARCH_DESCRIPTION = "//*[@resource-id='org.wikipedia:id/search_container']//*[@text='German industrial metal band']",
-    WORD_FOR_EMPTY_SEARCH = "Bla zzz qwerty",
     CANCEL_SEARCH_BUTTON = "//android.widget.ImageView[@resource-id='org.wikipedia:id/search_close_btn']",
     FIRST_ARTICLE_TITLE = "//*[contains(@text,'Java (programming language)')]",
     SECOND_ARTICLE_TITLE = "//*[contains(@text,'Rammstein')]",
@@ -149,12 +147,6 @@ public class MainPageObject {
         swipeUp(200);
     }
 
-    public void swipeUpToElement(){
-        this.swipeUpToFindElement(
-                By.xpath(FOOTER_ELEMENT),
-                "Can't find footer element 'View article in browser' link",
-                30);
-    }
 
     public void saveFirstArticle(){
 
