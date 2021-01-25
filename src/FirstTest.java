@@ -1,9 +1,9 @@
 import lib.CoreTestCase;
-import lib.ui.ArticlePageObject;
-import lib.ui.MainPageObject;
-import lib.ui.SearchPageObject;
+import lib.ui.*;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.time.Duration;
 
 public class FirstTest extends CoreTestCase {
 
@@ -67,6 +67,7 @@ public class FirstTest extends CoreTestCase {
     @Test
     public void testArticleSwipe() {
     SearchPageObject SearchPageObject = new SearchPageObject(driver);
+
     SearchPageObject.skipButtonClick();
     SearchPageObject.initSearchInput();
     SearchPageObject.searchArticleTitle(First_word_for_search);
@@ -100,60 +101,91 @@ public class FirstTest extends CoreTestCase {
     SearchPageObject.searchWithEmptyResult();
     }
 
-//    @Test
-//    public void testSaveOneArticle(){
-//    MainPageObject.skipButtonClick();
-//    MainPageObject.searchWikipediaClick();
-//    MainPageObject.saveFirstArticle();
-//    }
-//
-//    @Test
-//    public void testSaveTwoArticles(){ // Ex5: Тест: сохранение двух статей
-//    MainPageObject.skipButtonClick();
-//    MainPageObject.searchWikipediaClick();
-//    MainPageObject.saveFirstArticle();
-//    MainPageObject.backFromSaveList();
-//    MainPageObject.saveSecondArticle();
-//    MainPageObject.swipeArticleToDelete();
-//    MainPageObject.articleAvailabilityCheck();
-//    }
-//
-//    @Test
-//    public void testAmountOfNotEmptySearch(){ //Ex6: Тест: Assert Title
-//    MainPageObject.skipButtonClick();
-//    MainPageObject.searchWikipediaClick();
-//    MainPageObject.assertTitleCheck();
-//    }
-//
-//    @Test
-//   public void testFirstTestToRotate(){ //Ex7*: Поворот экрана. Первый тест, который падает
-//   MainPageObject.skipButtonClick();
-//   MainPageObject.searchWikipediaClick();
-//   MainPageObject.searchArticleTitle();
-//   MainPageObject.rotateToLandscape();
-//   MainPageObject.clickArticleOpen();
-//
-//   }
-//
-//  @Test
-//  public void testSecondTestToRotate(){ //Ex7*: Поворот экрана. Второй тест, который не падает
-//  MainPageObject.skipButtonClick();
-//  MainPageObject.searchWikipediaClick();
-//  MainPageObject.rotateToLandscape();
-//  MainPageObject.rotateToPortrait();
-//   }
-//
-//    @Test
-//    public void testAppInBackground(){
-//    MainPageObject.skipButtonClick();
-//    MainPageObject.searchWikipediaClick();
-//    MainPageObject.searchArticleTitle();
-//    MainPageObject.clickArticleOpen();
-//    MainPageObject.appInBackground();
-//    MainPageObject.articleTitleAfterBackground();
-//    }
+    @Test
+    public void testSaveOneArticle(){
 
+    SearchPageObject SearchPageObject = new SearchPageObject(driver);
+    SearchPageObject.skipButtonClick();
+    SearchPageObject.initSearchInput();
+    SearchPageObject.searchArticleTitle(First_word_for_search);
+    SearchPageObject.clickByArticleWithSubstring(Article_description);
 
+    ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+    ArticlePageObject.waitForTitleElement();
+    ArticlePageObject.addFirstArticleToMyList();
+    }
 
+   @Test
+   public void testSaveTwoArticles(){ // Ex5: Тест: сохранение двух статей
 
+    SearchPageObject SearchPageObject = new SearchPageObject(driver);
+    SearchPageObject.skipButtonClick();
+    SearchPageObject.initSearchInput();
+    SearchPageObject.searchArticleTitle(First_word_for_search);
+    SearchPageObject.clickByArticleWithSubstring(Article_description);
+
+    ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+    ArticlePageObject.waitForTitleElement();
+    ArticlePageObject.addFirstArticleToMyList();
+
+    NavigationUI NavigationUI = new NavigationUI(driver);
+    NavigationUI.backFromSaveList();
+    ArticlePageObject.addSecondArticleToMyList();
+
+    MyListsPageObject MyListsPageObject = new MyListsPageObject(driver);
+    MyListsPageObject.myListsOpening();
+    MyListsPageObject.swipeArticleToDelete();
+    MyListsPageObject.articleAvailabilityCheck();
+    }
+
+    @Test
+    public void testAmountOfNotEmptySearch(){  //Ex6: Тест: Assert Title
+
+    SearchPageObject SearchPageObject = new SearchPageObject(driver);
+    SearchPageObject.skipButtonClick();
+    SearchPageObject.initSearchInput();
+    SearchPageObject.assertTitleCheck();
+    }
+
+    @Test
+    public void testFirstTestToRotate(){ //Ex7*: Поворот экрана. Первый тест, который падает
+
+    SearchPageObject SearchPageObject = new SearchPageObject(driver);
+    SearchPageObject.skipButtonClick();
+    SearchPageObject.initSearchInput();
+    SearchPageObject.searchArticleTitle(Second_word_for_search);
+
+    NavigationUI NavigationUI = new NavigationUI(driver);
+    NavigationUI.rotateToLandscape();
+    SearchPageObject.clickByArticleWithSubstring(Article_description);
+    }
+
+    @Test
+    public void testSecondTestToRotate(){ //Ex7*: Поворот экрана. Второй тест, который не падает
+
+    SearchPageObject SearchPageObject = new SearchPageObject(driver);
+    SearchPageObject.skipButtonClick();
+    SearchPageObject.initSearchInput();
+    SearchPageObject.searchArticleTitle(Second_word_for_search);
+
+    NavigationUI NavigationUI = new NavigationUI(driver);
+    NavigationUI.rotateToLandscape();
+    NavigationUI.rotateToPortrait();
+  }
+
+  @Test
+  public void testAppInBackground(){
+  SearchPageObject SearchPageObject = new SearchPageObject(driver);
+  SearchPageObject.skipButtonClick();
+  SearchPageObject.initSearchInput();
+  SearchPageObject.searchArticleTitle(First_word_for_search);
+  SearchPageObject.clickByArticleWithSubstring(Article_description);
+  ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+  ArticlePageObject.waitForTitleElement();
+
+  NavigationUI NavigationUI = new NavigationUI(driver);
+  NavigationUI.appInBackground(Duration.ofSeconds(3));
+
+  ArticlePageObject.articleTitleAfterBackground();
+  }
 }

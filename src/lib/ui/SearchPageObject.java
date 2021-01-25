@@ -1,33 +1,19 @@
 package lib.ui;
 
 import io.appium.java_client.AppiumDriver;
+import org.junit.Assert;
 import org.openqa.selenium.By;
+
+import java.util.List;
 
 public class SearchPageObject extends MainPageObject{
 
     private static final String
-   SKIP_BUTTON = "//*[contains(@text,'SKIP')]",
-   SEARCH_INIT_ELEMENT = "//*[contains(@text,'Search Wikipedia')]",
-    FIRST_WORD_FOR_SEARCH = "Java",
+    SKIP_BUTTON = "//*[contains(@text,'SKIP')]",
+    SEARCH_INIT_ELEMENT = "//*[contains(@text,'Search Wikipedia')]",
     SEARCH_RESULT_BY_SUBSTRING_TPL = "//*[@resource-id='org.wikipedia:id/search_container']//*[@text='{SUBSTRING}']",
-    SECOND_WORD_FOR_SEARCH = "Rammstein",
-    SECOND_ARTICLE_SEARCH_DESCRIPTION = "//*[@resource-id='org.wikipedia:id/search_container']//*[@text='German industrial metal band']",
     WORD_FOR_EMPTY_SEARCH = "Bla zzz qwerty",
     CANCEL_SEARCH_BUTTON = "//android.widget.ImageView[@resource-id='org.wikipedia:id/search_close_btn']",
-    FIRST_ARTICLE_TITLE = "//*[contains(@text,'Java (programming language)')]",
-    SECOND_ARTICLE_TITLE = "//*[contains(@text,'Rammstein')]",
-    FOOTER_ELEMENT = "//*[contains(@text,'View article in browser')]",
-    SAVE_BUTTON = "//android.widget.TextView[@resource-id='org.wikipedia:id/article_menu_bookmark']",
-    ADD_TO_LIST_BUTTON = "//*[contains(@text,'ADD TO LIST')]",
-    CREATE_NEW_LIST_BUTTON = "//*[contains(@text,'Create new')]",
-    NAME_OF_THE_LIST = "//*[contains(@text,'Name of this list')]",
-    DESCRIPTION_OF_THE_LIST = "//*[contains(@text,'Description (optional)')]",
-    OK_BUTTON = "//*[contains(@text,'OK')]",
-    NAME_OF_THE_LIST_VALUE = "First list title",
-    DESCRIPTION_OF_THE_LIST_VALUE = "First list description",
-    LIST_TITLE_ON_READING_LIST_POP_UP = "//android.widget.TextView[@resource-id='org.wikipedia:id/item_title']",
-    BACK_BUTTON = "//android.widget.ImageButton[@content-desc='Navigate up']",
-    VIEW_LIST_BUTTON = "//*[contains(@text,'VIEW LIST')]",
     NO_RESULTS_STRING = "//android.widget.TextView[@resource-id='org.wikipedia:id/results_text']",
     NOT_EMPTY_SEARCH_VALUE = "Rammstein discography",
     NOT_EMPTY_SEARCH_LOCATOR = "//*[@resource-id='org.wikipedia:id/search_results_container']";
@@ -111,6 +97,32 @@ public class SearchPageObject extends MainPageObject{
     By.xpath(search_result_xpath),
     "Cannot find and click search result with substring " +substring,
     10);
+    }
+
+    private int getAmountOfElements(By by){
+        List elements = driver.findElements(by);
+        return elements.size();
+    }
+
+    public void assertTitleCheck(){
+        this.waitForElementAndSendKeys(
+                By.xpath(SEARCH_INIT_ELEMENT),
+                NOT_EMPTY_SEARCH_VALUE,
+                "Cannot find search input",
+                10);
+
+        this.waitForElementPresent(
+                By.xpath(NOT_EMPTY_SEARCH_LOCATOR),
+                "Cannot find anything by the request " + NOT_EMPTY_SEARCH_VALUE,
+                10);
+
+        int amount_of_search_results = getAmountOfElements(
+                By.xpath(NOT_EMPTY_SEARCH_LOCATOR)
+        );
+
+        Assert.assertTrue(
+                "We found too few results!",
+                amount_of_search_results >0);
     }
 
 }
