@@ -18,7 +18,6 @@ public class SearchPageObject extends MainPageObject{
     NOT_EMPTY_SEARCH_VALUE = "Rammstein discography",
     NOT_EMPTY_SEARCH_LOCATOR = "//*[@resource-id='org.wikipedia:id/search_results_container']";
 
-
     public SearchPageObject(AppiumDriver driver){
     super(driver);
     }
