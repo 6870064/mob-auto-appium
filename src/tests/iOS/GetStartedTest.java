@@ -20,6 +20,12 @@ public class GetStartedTest extends iOSTestCase {
 
     WelcomePageObject.waitForLearnMoreDataCollectedText();
     WelcomePageObject.clickGetStartedButton();
+    }
 
+    @Test
+    public void testSkipWelcomePages(){
+    WelcomePageObject WelcomePageObject = new WelcomePageObject(driver);
+    WelcomePageObject.clickSkip();
+    WelcomePageObject.clickSearchInput();
     }
 }
