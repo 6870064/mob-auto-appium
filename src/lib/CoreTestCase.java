@@ -17,7 +17,7 @@ public class CoreTestCase extends TestCase { //сможем использова
 
     super.setUp();
     driver = Platform.getInstance().getDriver();
-    this.skipeWelcomePageForIOSApp();
+//    this.skipeWelcomePageForIOSApp();
     }
 
     @Override
