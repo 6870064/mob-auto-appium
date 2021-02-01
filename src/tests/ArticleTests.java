@@ -2,13 +2,14 @@ package tests;
 import lib.CoreTestCase;
 import lib.ui.ArticlePageObject;
 import lib.ui.SearchPageObject;
+import lib.ui.factories.SearchPageObjectFactory;
 import org.junit.Test;
 
 public class ArticleTests extends CoreTestCase {
 
     @Test
     public void testArticleSwipe() {
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
 
         SearchPageObject.skipButtonClick();
         SearchPageObject.initSearchInput();
@@ -22,7 +23,7 @@ public class ArticleTests extends CoreTestCase {
 
     @Test
     public void testArticleSwipeToFooter(){
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
 
         SearchPageObject.skipButtonClick();
         SearchPageObject.initSearchInput();
@@ -36,7 +37,7 @@ public class ArticleTests extends CoreTestCase {
     @Test
     public void testCompareArticleTitle(){
 
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.skipButtonClick();
         SearchPageObject.initSearchInput();
         SearchPageObject.searchArticleTitle(First_word_for_search);

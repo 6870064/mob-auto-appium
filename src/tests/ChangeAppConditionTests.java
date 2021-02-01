@@ -1,9 +1,12 @@
 package tests;
+
 import lib.CoreTestCase;
 import lib.ui.ArticlePageObject;
 import lib.ui.NavigationUI;
 import lib.ui.SearchPageObject;
+import lib.ui.factories.SearchPageObjectFactory;
 import org.junit.Test;
+
 import java.time.Duration;
 
 public class ChangeAppConditionTests extends CoreTestCase {
@@ -11,7 +14,7 @@ public class ChangeAppConditionTests extends CoreTestCase {
     @Test
     public void testFirstTestToRotate(){ //Ex7*: Поворот экрана. Первый тест, который падает
 
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.skipButtonClick();
         SearchPageObject.initSearchInput();
         SearchPageObject.searchArticleTitle(Second_word_for_search);
@@ -24,7 +27,7 @@ public class ChangeAppConditionTests extends CoreTestCase {
     @Test
     public void testSecondTestToRotate(){ //Ex7*: Поворот экрана. Второй тест, который не падает
 
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.skipButtonClick();
         SearchPageObject.initSearchInput();
         SearchPageObject.searchArticleTitle(Second_word_for_search);
@@ -36,7 +39,7 @@ public class ChangeAppConditionTests extends CoreTestCase {
 
     @Test
     public void testAppInBackground(){
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.skipButtonClick();
         SearchPageObject.initSearchInput();
         SearchPageObject.searchArticleTitle(First_word_for_search);

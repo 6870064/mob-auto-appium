@@ -45,7 +45,7 @@ public class WelcomePageObject extends MainPageObject {
     this.waitForElementAndClick(
     SKIP_BUTTON,
     "Cannot find and tap [Skip] button",
-    7);
+    5);
 
     this.waitForElementPresent(
     SEARCH_INIT_ELEMENT,
@@ -53,10 +53,4 @@ public class WelcomePageObject extends MainPageObject {
     5);
     }
 
-    public void clickSearchInput(){
-    this.waitForElementAndClick(
-    SEARCH_INIT_ELEMENT,
-    "Cannot click 'Search Wikipedia' input field",
-    5);
-    }
 }
