@@ -39,10 +39,17 @@ abstract public class ArticlePageObject extends MainPageObject {
     }
 
     public void swipeToFooter(){
-    this.swipeUpToFindElement(
-    FOOTER_ELEMENT,
-    "Can't find footer element 'View article in browser' link",
-    300);
+
+        if(Platform.getInstance().isAndroid()){
+            this.swipeUpToFindElement(
+                    FOOTER_ELEMENT,
+                    "Can't find footer element 'View article in browser' link",
+                    300);
+        } else {
+            this.swipeUpTillElementAppear(FOOTER_ELEMENT,
+            "Cannot find end of the article",
+            300);
+        }
     }
 
     public void addFirstArticleToMyList(){
