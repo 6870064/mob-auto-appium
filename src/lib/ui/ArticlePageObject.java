@@ -100,21 +100,21 @@ abstract public class ArticlePageObject extends MainPageObject {
 
     public void addSecondArticleToMyList(){
 
-    this.waitForElementAndSendKeys(
-    SEARCH_INIT_ELEMENT,
-    SECOND_WORD_FOR_SEARCH,
-    "Cannot find search input",
-    5);
-
-    this.waitForElementPresent(
-    SECOND_ARTICLE_SEARCH_DESCRIPTION,
-    "Cannot find " + SECOND_ARTICLE_SEARCH_DESCRIPTION + " topic searching by " + SECOND_WORD_FOR_SEARCH,
-    12);
-
-    this.waitForElementAndClick(
-    SECOND_ARTICLE_SEARCH_DESCRIPTION,
-    "Cannot find article title description",
-    10);
+//    this.waitForElementAndSendKeys(
+//    SEARCH_INIT_ELEMENT,
+//    SECOND_WORD_FOR_SEARCH,
+//    "Cannot find search input",
+//    5);
+//
+//    this.waitForElementPresent(
+//    SECOND_ARTICLE_SEARCH_DESCRIPTION,
+//    "Cannot find " + SECOND_ARTICLE_SEARCH_DESCRIPTION + " topic searching by " + SECOND_WORD_FOR_SEARCH,
+//    12);
+//
+//    this.waitForElementAndClick(
+//    SECOND_ARTICLE_SEARCH_DESCRIPTION,
+//    "Cannot find article title description",
+//    10);
 
     this.waitForElementAndClick(
     SAVE_BUTTON,

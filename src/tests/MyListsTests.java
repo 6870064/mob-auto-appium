@@ -52,13 +52,11 @@ public class MyListsTests extends CoreTestCase {
         NavigationUI NavigationUI = NavigationUIFactory.get(driver);
         NavigationUI.backFromSaveList();
 
-        if (Platform.getInstance().isAndroid()){
+        SearchPageObject.initSearchInput();
+        SearchPageObject.searchArticleTitle(Second_word_for_search);
+        SearchPageObject.clickByArticleWithSubstring(Second_article_description);
+
         ArticlePageObject.addSecondArticleToMyList();
-        } else {
-            SearchPageObject.initSearchInput();
-            SearchPageObject.searchFieldClear();
-            ArticlePageObject.addSecondArticleToSaved();
-        }
 
         MyListsPageObject MyListsPageObject = MyListsPageObjectFactory.get(driver);
         MyListsPageObject.myListsOpening();
