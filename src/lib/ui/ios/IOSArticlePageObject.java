@@ -15,6 +15,7 @@ public class IOSArticlePageObject extends ArticlePageObject {
     CREATE_NEW_LIST_BUTTON = "xpath://*[contains(@text,'Create new')]";
     NAME_OF_THE_LIST = "xpath://*[contains(@text,'Name of this list')]";
     DESCRIPTION_OF_THE_LIST = "xpath://*[contains(@text,'Description (optional)')]";
+    CLOSE_SYNC_POP_UP_BUTTON = "id:places auth close";
     OK_BUTTON = "xpath://*[contains(@text,'OK')]";
     VIEW_LIST_BUTTON = "xpath://*[contains(@text,'VIEW LIST')]";
     SECOND_WORD_FOR_SEARCH = "Rammstein";

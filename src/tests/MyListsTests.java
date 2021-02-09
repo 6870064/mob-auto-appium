@@ -1,11 +1,14 @@
 package tests;
 
 import lib.CoreTestCase;
+import lib.Platform;
 import lib.ui.ArticlePageObject;
 import lib.ui.MyListsPageObject;
 import lib.ui.NavigationUI;
 import lib.ui.SearchPageObject;
 import lib.ui.factories.ArticlePageObjectFactory;
+import lib.ui.factories.MyListsPageObjectFactory;
+import lib.ui.factories.NavigationUIFactory;
 import lib.ui.factories.SearchPageObjectFactory;
 import org.junit.Test;
 
@@ -21,7 +24,12 @@ public class MyListsTests extends CoreTestCase {
 
         ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
         ArticlePageObject.waitForTitleElement();
-        ArticlePageObject.addFirstArticleToMyList();
+
+        if (Platform.getInstance().isAndroid()){
+            ArticlePageObject.addFirstArticleToMyList();
+        } else {
+            ArticlePageObject.addArticleToMySaved();
+        }
     }
 
     @Test
@@ -35,13 +43,24 @@ public class MyListsTests extends CoreTestCase {
 
         ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
         ArticlePageObject.waitForTitleElement();
-        ArticlePageObject.addFirstArticleToMyList();
+        if (Platform.getInstance().isAndroid()){
+            ArticlePageObject.addFirstArticleToMyList();
+        } else {
+            ArticlePageObject.addArticleToMySaved();
+        }
 
-        NavigationUI NavigationUI = new NavigationUI(driver);
+        NavigationUI NavigationUI = NavigationUIFactory.get(driver);
         NavigationUI.backFromSaveList();
-        ArticlePageObject.addSecondArticleToMyList();
 
-        MyListsPageObject MyListsPageObject = new MyListsPageObject(driver);
+        if (Platform.getInstance().isAndroid()){
+        ArticlePageObject.addSecondArticleToMyList();
+        } else {
+            SearchPageObject.initSearchInput();
+            SearchPageObject.searchFieldClear();
+            ArticlePageObject.addSecondArticleToSaved();
+        }
+
+        MyListsPageObject MyListsPageObject = MyListsPageObjectFactory.get(driver);
         MyListsPageObject.myListsOpening();
         MyListsPageObject.swipeArticleToDelete();
         MyListsPageObject.articleAvailabilityCheck();

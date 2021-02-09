@@ -5,6 +5,7 @@ import lib.ui.ArticlePageObject;
 import lib.ui.NavigationUI;
 import lib.ui.SearchPageObject;
 import lib.ui.factories.ArticlePageObjectFactory;
+import lib.ui.factories.NavigationUIFactory;
 import lib.ui.factories.SearchPageObjectFactory;
 import org.junit.Test;
 
@@ -20,7 +21,7 @@ public class ChangeAppConditionTests extends CoreTestCase {
         SearchPageObject.initSearchInput();
         SearchPageObject.searchArticleTitle(Second_word_for_search);
 
-        NavigationUI NavigationUI = new NavigationUI(driver);
+        NavigationUI NavigationUI = NavigationUIFactory.get(driver);
         NavigationUI.rotateToLandscape();
         SearchPageObject.clickByArticleWithSubstring(Article_description);
     }
@@ -33,7 +34,7 @@ public class ChangeAppConditionTests extends CoreTestCase {
         SearchPageObject.initSearchInput();
         SearchPageObject.searchArticleTitle(Second_word_for_search);
 
-        NavigationUI NavigationUI = new NavigationUI(driver);
+        NavigationUI NavigationUI = NavigationUIFactory.get(driver);
         NavigationUI.rotateToLandscape();
         NavigationUI.rotateToPortrait();
     }
@@ -48,7 +49,7 @@ public class ChangeAppConditionTests extends CoreTestCase {
         ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
         ArticlePageObject.waitForTitleElement();
 
-        NavigationUI NavigationUI = new NavigationUI(driver);
+        NavigationUI NavigationUI = NavigationUIFactory.get(driver);
         NavigationUI.appInBackground(Duration.ofSeconds(3));
 
         ArticlePageObject.articleTitleAfterBackground();

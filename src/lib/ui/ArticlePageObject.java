@@ -19,6 +19,7 @@ abstract public class ArticlePageObject extends MainPageObject {
     CREATE_NEW_LIST_BUTTON,
     NAME_OF_THE_LIST,
     DESCRIPTION_OF_THE_LIST,
+    CLOSE_SYNC_POP_UP_BUTTON,
     OK_BUTTON,
     VIEW_LIST_BUTTON,
     SECOND_WORD_FOR_SEARCH,
@@ -119,6 +120,43 @@ abstract public class ArticlePageObject extends MainPageObject {
     SAVE_BUTTON,
     "Cannot click [Save] button in tab bar",
     10);
+    }
+
+    public void addArticleToMySaved(){
+    this.waitForElementAndClick(
+    SAVE_BUTTON,
+    "Cannot close article, cannot find option to add article to the reading list",
+    12
+     );
+
+    this.waitForElementAndClick(
+    CLOSE_SYNC_POP_UP_BUTTON,
+    "Cannot tap [x] button on 'Sync your saved articles' pop up",
+    10);
+    }
+
+    public void addSecondArticleToSaved(){
+
+    this.waitForElementAndSendKeys(
+    SEARCH_INIT_ELEMENT,
+    SECOND_WORD_FOR_SEARCH,
+    "Cannot find search input",
+    5);
+
+    this.waitForElementPresent(
+    SECOND_ARTICLE_SEARCH_DESCRIPTION,
+    "Cannot find " + SECOND_ARTICLE_SEARCH_DESCRIPTION + " topic searching by " + SECOND_WORD_FOR_SEARCH,
+    12);
+
+    this.waitForElementAndClick(
+    SECOND_ARTICLE_SEARCH_DESCRIPTION,
+    "Cannot find article title description",
+    10);
+
+    this.waitForElementAndClick(
+    SAVE_BUTTON,
+    "Cannot close article, cannot find option to add article to the reading list",
+    12);
     }
 
     public void articleTitleAfterBackground(){

@@ -116,4 +116,10 @@ abstract public class SearchPageObject extends MainPageObject{
     amount_of_search_results >0);
     }
 
+
+    public void searchFieldClear(){ //Метод клика по кнопке [X] Cancel Search
+        this.waitForElementAndClick(CANCEL_SEARCH_BUTTON,"Search cancel button is still presented", 5);
+
+    }
+
 }
