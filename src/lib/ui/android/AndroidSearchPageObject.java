@@ -1,7 +1,7 @@
 package lib.ui.android;
 
 import io.appium.java_client.AppiumDriver;
-import lib.ui.SearchPageObject;
+import lib.ui.PageObjects.SearchPageObject;
 
 public class AndroidSearchPageObject extends SearchPageObject {
 

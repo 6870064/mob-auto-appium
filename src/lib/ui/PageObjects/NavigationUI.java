@@ -1,4 +1,4 @@
-package lib.ui;
+package lib.ui.PageObjects;
 import io.appium.java_client.AppiumDriver;
 import lib.Platform;
 import org.openqa.selenium.ScreenOrientation;
@@ -49,10 +49,16 @@ abstract public class NavigationUI extends MainPageObject{
     "Cannot tap [<] Back button to return on the main screen",
     12);
     }
-
-
-
     }
+
+    public void searchFieldClear(){
+    this.waitForElementAndClick(
+    CANCEL_SEARCH_BUTTON,
+    "Cannot find and click Cancel search button",
+   10);
+    }
+
+
     public void appInBackground(Duration seconds){
         driver.runAppInBackground(Duration.ofSeconds(3));
     }

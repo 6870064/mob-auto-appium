@@ -1,9 +1,9 @@
 package tests;
 
 import lib.CoreTestCase;
-import lib.ui.ArticlePageObject;
-import lib.ui.NavigationUI;
-import lib.ui.SearchPageObject;
+import lib.ui.PageObjects.ArticlePageObject;
+import lib.ui.PageObjects.NavigationUI;
+import lib.ui.PageObjects.SearchPageObject;
 import lib.ui.factories.ArticlePageObjectFactory;
 import lib.ui.factories.NavigationUIFactory;
 import lib.ui.factories.SearchPageObjectFactory;

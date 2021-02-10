@@ -1,7 +1,7 @@
 package lib.ui.ios;
 
 import io.appium.java_client.AppiumDriver;
-import lib.ui.NavigationUI;
+import lib.ui.PageObjects.NavigationUI;
 
 public class IOSNavigationUI extends NavigationUI {
 

@@ -1,7 +1,7 @@
 package lib.ui.factories;
 import io.appium.java_client.AppiumDriver;
 import lib.Platform;
-import lib.ui.MyListsPageObject;
+import lib.ui.PageObjects.MyListsPageObject;
 import lib.ui.android.AndroidMyListsPageObject;
 import lib.ui.ios.IOSMyListsPageObject;
 

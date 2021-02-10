@@ -1,7 +1,7 @@
 package lib.ui.android;
 
 import io.appium.java_client.AppiumDriver;
-import lib.ui.MyListsPageObject;
+import lib.ui.PageObjects.MyListsPageObject;
 
 public class AndroidMyListsPageObject extends MyListsPageObject {
     static {

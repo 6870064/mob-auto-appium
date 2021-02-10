@@ -1,4 +1,4 @@
-package lib.ui;
+package lib.ui.PageObjects;
 import io.appium.java_client.AppiumDriver;
 
 public class WelcomePageObject extends MainPageObject {

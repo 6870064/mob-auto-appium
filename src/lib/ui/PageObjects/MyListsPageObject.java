@@ -1,4 +1,4 @@
-package lib.ui;
+package lib.ui.PageObjects;
 import io.appium.java_client.AppiumDriver;
 
 abstract public class MyListsPageObject extends MainPageObject {
@@ -13,6 +13,10 @@ abstract public class MyListsPageObject extends MainPageObject {
     VIEW_LIST_BUTTON,
     FIRST_ARTICLE_TITLE,
     SECOND_ARTICLE_TITLE,
+    SAVED_BUTTON,
+    EDIT_BUTTON,
+    FIRST_ARTICLE_CELL,
+    SECOND_ARTICLE_CELL,
     SECOND_WORD_FOR_SEARCH;
 
     public void myListsOpening(){
@@ -41,6 +45,14 @@ abstract public class MyListsPageObject extends MainPageObject {
     SECOND_ARTICLE_TITLE,
     "Cannot find the second saved article",
    10);
+    }
+
+    public void savedOpening(){
+    this.waitForElementAndClick(
+    SAVED_BUTTON,
+    "Cannot tap Saved button and open saved list",
+    10);
+
     }
 
     public void swipeArticleToDelete(){

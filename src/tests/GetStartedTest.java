@@ -1,7 +1,7 @@
 package tests;
 import lib.CoreTestCase;
 import lib.Platform;
-import lib.ui.WelcomePageObject;
+import lib.ui.PageObjects.WelcomePageObject;
 import org.junit.Test;
 
 public class GetStartedTest extends CoreTestCase {

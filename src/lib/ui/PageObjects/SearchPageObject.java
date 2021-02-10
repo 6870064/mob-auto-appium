@@ -1,4 +1,4 @@
-package lib.ui;
+package lib.ui.PageObjects;
 import io.appium.java_client.AppiumDriver;
 import org.junit.Assert;
 

@@ -1,7 +1,7 @@
 package tests;
 
 import lib.CoreTestCase;
-import lib.ui.SearchPageObject;
+import lib.ui.PageObjects.SearchPageObject;
 import lib.ui.factories.SearchPageObjectFactory;
 import org.junit.Test;
 

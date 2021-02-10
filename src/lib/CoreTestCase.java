@@ -1,7 +1,7 @@
 package lib;
 import io.appium.java_client.AppiumDriver;
 import junit.framework.TestCase;
-import lib.ui.WelcomePageObject;
+import lib.ui.PageObjects.WelcomePageObject;
 
 public class CoreTestCase extends TestCase { //сможем использовать TestCase из JUnitFramework,класс Junit, который имеет методы для тестов (ассерты и тд)
 

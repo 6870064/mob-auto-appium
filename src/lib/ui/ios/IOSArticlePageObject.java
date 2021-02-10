@@ -1,7 +1,7 @@
 package lib.ui.ios;
 
 import io.appium.java_client.AppiumDriver;
-import lib.ui.ArticlePageObject;
+import lib.ui.PageObjects.ArticlePageObject;
 
 public class IOSArticlePageObject extends ArticlePageObject {
 
@@ -15,8 +15,12 @@ public class IOSArticlePageObject extends ArticlePageObject {
     CREATE_NEW_LIST_BUTTON = "xpath://*[contains(@text,'Create new')]";
     NAME_OF_THE_LIST = "xpath://*[contains(@text,'Name of this list')]";
     DESCRIPTION_OF_THE_LIST = "xpath://*[contains(@text,'Description (optional)')]";
-    CLOSE_SYNC_POP_UP_BUTTON = "id:places auth close";
+    ADD_FIRST_ARTICLE_TO_THE_LIST = "id:Add 'Java (programming language)' to a reading list?";
     OK_BUTTON = "xpath://*[contains(@text,'OK')]";
+    ADD_BUTTON = "id:Add";
+    READING_LIST_TITLE = "id:reading list title";
+    OPTIONAL_SHORT_DESCRIPTION = "id:optional short description";
+    CREATE_READING_LIST = "id: Create reading list";
     VIEW_LIST_BUTTON = "xpath://*[contains(@text,'VIEW LIST')]";
     SECOND_WORD_FOR_SEARCH = "Rammstein";
     NAME_OF_THE_LIST_VALUE = "First list title";
